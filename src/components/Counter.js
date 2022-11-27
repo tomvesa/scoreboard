@@ -32,10 +32,19 @@ function changeOnHold(id, delta){
 
     return (
       <div className="counter">
-        <button className="counter-action decrement" onClick={ () => changeOnHold( id, -1 )}> - </button>
+        <button 
+          className="counter-action decrement" 
+          onMouseDown={ () => changeOnHold( id, -1 )}
+          onMouseUp={ ()=> clearTimers() } 
+          onMouseLeave={ ()=> clearTimers() }
+          > - </button>
         <span className="counter-score round-score" id={`num-${id}`}> 0  </span>
-        <button className="counter-action increment add" onMouseDown={ () => changeOnHold(id, +1) }
-        onMouseUp={ ()=> clearTimers() } onMouseLeave={ ()=> clearTimers() }> + </button>
+        <button 
+          className="counter-action increment add" 
+          onMouseDown={ () => changeOnHold(id, +1) }
+        onMouseUp={ ()=> clearTimers() } 
+        onMouseLeave={ ()=> clearTimers() }
+        > + </button>
         <span className="counter-score total-score" >{ score }</span>
       </div>
     );
