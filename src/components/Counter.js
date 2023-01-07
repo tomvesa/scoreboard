@@ -35,6 +35,9 @@ function changeOnHold(id, delta){
         <button 
           className="counter-action decrement" 
           onMouseDown={ () => changeOnHold( id, -1 )}
+          onTouchStartCapture={ () => changeOnHold( id, -1 )}
+
+          onTouchEnd={ ()=> clearTimers() } 
           onMouseUp={ ()=> clearTimers() } 
           onMouseLeave={ ()=> clearTimers() }
           > - </button>

@@ -15,27 +15,35 @@ const App = () => {
       name: "Guil",
       score: 0,
       id: 1,
-      roundScore: 0
+      roundScore: 0,
+      isHighScore: false
     },
     {
       name: "Treasure",
       score: 0,
       id: 2,
-      roundScore: 0
+      roundScore: 0,
+      isHighScore: false
     },
     {
       name: "Ashley",
       score: 0,
       id: 3,
-      roundScore: 0
+      roundScore: 0,
+      isHighScore: false
     },
     {
       name: "James",
       score: 0,
       id: 4,
-      roundScore: 0
+      roundScore: 0,
+      isHighScore: false
     }   
   ]);
+
+  //sort players based on thei total score
+  //sortHighToLow();
+  console.log("high score: ", getSmallestScore());
 
 
   const nextPlayerId = useRef( 5 );
@@ -83,7 +91,23 @@ const App = () => {
   
 
 }
-                 
+  function sortHighToLow(){
+    return players.sort((a,b) => {
+          if(a.score > b.score){ return 1}
+          else if(b.score > a.score){ return -1}
+          return 0;
+          });
+  }     
+  
+  function getSmallestScore() {
+        const allScores = players.reduce((acc, item) => {
+                        if(item.score > 0){
+                         return   acc= [...acc, item.score]
+                        }
+                        return acc;
+        }, []);
+        return  Math.min(...allScores);
+  }
 
   const handleAddPlayer = ( name )=>{
       setPlayers ( prevPlayers => [
@@ -104,10 +128,11 @@ const App = () => {
         title= "scoreboard"
         players={ players }
         changeTotalScore={ handleTotalScore }
+        playersSort= { sortHighToLow }
       />
 
       {/* Players list */}
-      {players.map(player =>
+      {players.map((player, index) =>
         <Player
           name={ player.name }
           score={ player.score }
@@ -116,7 +141,7 @@ const App = () => {
           key={ player.id.toString() }
           removePlayer={ handleRemovePlayer }
           //changeScore={ handleScorechange }
-          
+          isHighScore = { player.score === getSmallestScore() && player.score > 0 ? true : false }
         />
       )}
       <AddPlayerForm 
